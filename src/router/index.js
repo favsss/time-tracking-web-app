@@ -1,8 +1,21 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Checkins from './../views/Checkins';
+import Charts from './../views/Charts';
+
+Vue.use(VueRouter);
 
 const routes = [
-
+    {
+        path: '/',
+        name: 'checkins',
+        component: Checkins
+    },
+    {
+        path: '/charts',
+        name: 'charts',
+        component: Charts
+    }
 ];
 
 const router = new VueRouter({
