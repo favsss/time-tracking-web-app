@@ -1,28 +1,50 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <!-- <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+    </v-app-bar> -->
+
+    <v-main>
+      <AddCheckin />
+      <div v-for="checkin in allCheckins" :key="checkin.id">
+        <Checkin :detail="checkin"/>
+      </div>
+      <br>
+      <br>
+      <PieChart />
+      <br>
+      <BarChart />
+      <br>
+      <StackedBarChart />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { mapGetters } from 'vuex';
+import AddCheckin from './components/AddCheckin.vue';
+import Checkin from './components/Checkin.vue';
+import PieChart from './components/PieChart.vue';
+import BarChart from './components/BarChart.vue';
+import StackedBarChart from './components/StackedBarChart.vue';
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    AddCheckin,
+    Checkin,
+    PieChart,
+    BarChart,
+    StackedBarChart
+  },
+  data: () => ({
+    //
+  }),
+  computed: {
+    ...mapGetters('checkin', ["allCheckins"])
+  }
+};
+</script>
