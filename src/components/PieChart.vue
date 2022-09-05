@@ -79,6 +79,7 @@ export default {
         const chartData = this.getChartDataByTag
         this.chartData.labels = chartData.labels;
         this.chartData.datasets[0].data = chartData.data;
+        this.chartData.datasets[0].backgroundColor = chartData.backgroundColor;
     }
 }
 </script>

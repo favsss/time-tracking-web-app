@@ -725,14 +725,18 @@ const getters = {
 
         let labels = [];
         let data = [];
+        let backgroundColor = []
         for (let i = 0; i < result.length; ++i) {
             labels.push(result[i]["name"]);
             data.push(result[i]["hours"]);
+            const color = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+            backgroundColor.push(color)
         }
 
         return {
             "labels" : labels,
-            "data" : data
+            "data" : data,
+            "backgroundColor" : backgroundColor
         }
     },
     getChartDatabyDate (state) {
@@ -821,9 +825,11 @@ const getters = {
       let dataset = []
       for (const key of Object.keys(tag_obj)) {
           console.log(key, tag_obj[key]);
+          const color = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
           dataset.push({
               "label" : key,
-              "data" : tag_obj[key]
+              "data" : tag_obj[key],
+              "backgroundColor" : color
           });
       }
       
