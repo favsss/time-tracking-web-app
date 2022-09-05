@@ -9,21 +9,26 @@
             
             
                 <v-col><v-card-text>{{ detail.activity}}</v-card-text></v-col>
-            
-            
                 <v-col>
                     <v-btn>Edit</v-btn>
-                    <v-btn>Delete</v-btn>
+                    <v-btn @click="submit">Delete</v-btn>
                 </v-col>
             </v-row>
     </v-card>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
     name: 'Checkin',
     props: {
         detail: Object
+    },
+    methods: {
+        ...mapActions("checkin", ["deleteCheckin"]),
+        submit() {
+            this.deleteCheckin(this.detail.id);
+        }
     }
 }
 </script>

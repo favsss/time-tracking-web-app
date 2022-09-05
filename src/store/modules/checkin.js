@@ -845,12 +845,18 @@ const getters = {
 const actions = {
     addCheckin({ commit }, checkin) {
         commit('NEW_CHECKIN', checkin)
+    },
+    deleteCheckin({ commit }, id) {
+      if (confirm("Are you sure you want to delete this?")) {
+        commit('REMOVE_CHECKIN', id);
+      }
     }
 };
 
 const mutations = {
     SET_CHECKINS: (state, checkins) => (state.checkins = checkins),
-    NEW_CHECKIN: (state, checkin) => state.checkins.unshift(checkin)
+    NEW_CHECKIN: (state, checkin) => state.checkins.unshift(checkin),
+    REMOVE_CHECKIN: (state, id) => state.checkins = (state.checkins.filter(checkin => checkin.id !== id))
 };
 
 export default {
