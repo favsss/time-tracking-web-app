@@ -1,11 +1,19 @@
 <template>
   <v-app>
-    <!-- <v-app-bar
+    <v-app-bar
       app
       color="primary"
       dark
+      clipped-left
     >
-    </v-app-bar> -->
+      <v-app-bar-title>Time Tracker</v-app-bar-title>
+      <v-spacer></v-spacer>
+      <v-tabs centered>
+        <v-tab to="/">Checkin</v-tab>
+        <v-tab to="/charts">Charts</v-tab>
+      </v-tabs>
+      <v-btn>Logout</v-btn>
+    </v-app-bar>
 
     <v-main>
       <router-view></router-view>
