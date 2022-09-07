@@ -150,7 +150,7 @@ const getters = {
 const actions = {
     async addCheckin({ commit, rootGetters }, checkin) {
         const token = rootGetters["auth/getToken"];
-        const response = await axios.post("http://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:5000/checkins/", checkin, {
+        const response = await axios.post("https://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:8080/checkins/", checkin, {
           headers: {
             "Authorization" : `Bearer ${token}`
           }
@@ -165,7 +165,7 @@ const actions = {
     async deleteCheckin({ commit, rootGetters }, id) {
       const token = rootGetters["auth/getToken"];
       if (confirm("Are you sure you want to delete this?")) {
-        await axios.delete(`http://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:5000/checkins/${id}`, {
+        await axios.delete(`https://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:8080/checkins/${id}`, {
           headers: {
             "Authorization" : `Bearer ${token}`
           }
@@ -176,7 +176,7 @@ const actions = {
     async fetchCheckins({ commit, rootGetters }) {
       const token = rootGetters["auth/getToken"];
 
-      const response = await axios.get("http://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:5000/checkins", {
+      const response = await axios.get("https://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:8080/checkins", {
         headers: {
           "Authorization" : `Bearer ${token}`
         }

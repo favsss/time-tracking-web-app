@@ -22,7 +22,7 @@ const actions = {
         params.append("username", credentials.username);
         params.append("password", credentials.password);
 
-        const response = await axios.post("http://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:5000/token", params)
+        const response = await axios.post("https://ec2-35-89-178-233.us-west-2.compute.amazonaws.com:8080/token", params)
         const { access_token } = response.data
 
         commit('SET_TOKEN', access_token);
