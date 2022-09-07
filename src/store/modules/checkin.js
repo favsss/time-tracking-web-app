@@ -10,10 +10,10 @@ const getters = {
         const checkins = state.checkins;
         let helper = {};
         let result = checkins.reduce((prev, curr) => {
-            const key = curr['tag_id'];
+            const key = curr['tag'];
             if (!helper[key]) {
                 helper[key] = {
-                    "name" : curr["tag_id"],
+                    "name" : curr["tag"],
                     "hours" : curr["hours"]
                 };
                 prev.push(helper[key])
@@ -77,7 +77,7 @@ const getters = {
       };
     },
     getChartDataByTagAndDate(state) {
-      const checkins = state.checkins;
+      let checkins = state.checkins;
       let sorted_arr = checkins.sort((a, b) => {
         const c = new Date(a.creation_date);
         const d = new Date(b.creation_date);
@@ -86,16 +86,16 @@ const getters = {
 
       let helper_ = {} 
       let grouped = sorted_arr.reduce((prev, curr) => {
-          const key = curr['creation_date'] + '-' + curr['tag_id'];
+          const key = curr['creation_date'] + '-' + curr['tag'];
           if (!helper_[key]) {
               helper_[key] = {
                   "date" : curr['creation_date'],
-                  "name" : curr["tag_id"],
+                  "name" : curr["tag"],
                   "hours" : curr["hours"]
               }
               prev.push(helper_[key])
           } else {
-              helper_[key] += curr["hours"]
+              helper_[key]["hours"] += curr["hours"]
           }
           
           return prev;
@@ -117,7 +117,12 @@ const getters = {
           }
           const key = grouped[i]['name'];
           if (!tag_obj[key]) {
-              tag_obj[key] = [grouped[i]['hours']]
+              // fill gaps for missing data assuming it has no earlier records
+              tag_obj[key] = [];
+              for (let j = 0; j < x_axis.length - 1; ++j) {
+                tag_obj[key].push(0);
+              }
+              tag_obj[key].push(grouped[i]['hours'])
           } else {
               tag_obj[key].push(grouped[i]['hours']);
           }
@@ -125,7 +130,6 @@ const getters = {
 
       let dataset = []
       for (const key of Object.keys(tag_obj)) {
-          console.log(key, tag_obj[key]);
           const color = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
           dataset.push({
               "label" : key,
@@ -144,11 +148,28 @@ const getters = {
 };
 
 const actions = {
-    addCheckin({ commit }, checkin) {
-        commit('NEW_CHECKIN', checkin)
+    async addCheckin({ commit, rootGetters }, checkin) {
+        const token = rootGetters["auth/getToken"];
+        const response = await axios.post("http://localhost:8000/checkins/", checkin, {
+          headers: {
+            "Authorization" : `Bearer ${token}`
+          }
+        });
+
+        let data = response.data
+        data["creation_date"] = new Date(data["creation_date"]).toLocaleDateString();
+
+
+        commit('NEW_CHECKIN', data);
     },
-    deleteCheckin({ commit }, id) {
+    async deleteCheckin({ commit, rootGetters }, id) {
+      const token = rootGetters["auth/getToken"];
       if (confirm("Are you sure you want to delete this?")) {
+        await axios.delete(`http://localhost:8000/checkins/${id}`, {
+          headers: {
+            "Authorization" : `Bearer ${token}`
+          }
+        });
         commit('REMOVE_CHECKIN', id);
       }
     },
@@ -166,7 +187,7 @@ const actions = {
         checkins[i]["creation_date"] = new Date(checkins[i]["creation_date"]).toLocaleDateString();
       }
 
-      commit('SET_CHECKINS', response.data);
+      commit('SET_CHECKINS', checkins);
     }
 };
 

@@ -5,12 +5,12 @@
                 <v-col><v-card-text>{{ detail.hours }} hours</v-card-text></v-col>
             
             
-                <v-col><v-card-text>{{ detail.tag }}</v-card-text></v-col>
+                <v-col><v-card-text><v-chip>{{ detail.tag }}</v-chip></v-card-text></v-col>
             
             
                 <v-col><v-card-text>{{ detail.activity}}</v-card-text></v-col>
+                <v-col><v-card-text>{{ detail.creation_date }}</v-card-text></v-col>
                 <v-col>
-                    <v-btn>Edit</v-btn>
                     <v-btn @click="submit">Delete</v-btn>
                 </v-col>
             </v-row>

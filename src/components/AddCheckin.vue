@@ -26,7 +26,7 @@ export default {
     }),
     methods: {
         ...mapActions('checkin', ["addCheckin"]),
-        submit() {
+        async submit() {
             const hours_tagActivity =  this.rawCheckin.split("#");
             const hours = parseFloat(hours_tagActivity[0].split()[0])
             const tag_activity = hours_tagActivity[1]
@@ -34,7 +34,7 @@ export default {
             const activity = tag_activity.substring(tag_activity.indexOf(' ') + 1)
 
             console.log(`hours=${hours} tag=${tag} activity=${activity}`);
-            this.addCheckin({
+            await this.addCheckin({
                 hours: hours,
                 tag: tag,
                 activity: activity
