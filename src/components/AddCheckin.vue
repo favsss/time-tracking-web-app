@@ -35,7 +35,6 @@ export default {
 
             console.log(`hours=${hours} tag=${tag} activity=${activity}`);
             this.addCheckin({
-                id: 1,
                 hours: hours,
                 tag: tag,
                 activity: activity

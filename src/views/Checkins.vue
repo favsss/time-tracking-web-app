@@ -27,7 +27,7 @@
     </v-container>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import AddCheckin from '../components/AddCheckin.vue';
 import Checkin from '../components/Checkin.vue';
@@ -50,6 +50,7 @@ export default {
         pageSize: 5
     }),
     methods: {
+        ...mapActions("checkin", ["fetchCheckins"]),
         updateVisibleCheckins() {
             this.visible_checkins = this.allCheckins.slice(0, this.pageSize)
         },
@@ -61,9 +62,10 @@ export default {
             this.visible_checkins = this.allCheckins.slice(left, right);
         }
     },
-    created() {
-        let checkins = this.allCheckins
-        this.visible_checkins = checkins.slice(0, 5)
+    async created() {
+        await this.fetchCheckins();
+        let checkins = this.allCheckins;
+        this.visible_checkins = checkins.slice(0, this.entries[0]);
     },
     watch:{
         allCheckins(curr, prev) {
