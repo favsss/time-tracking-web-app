@@ -65,7 +65,15 @@ Contains the Pages to which users can navigate to using the router.
 
 ![image](https://user-images.githubusercontent.com/48959530/188936041-8972abcf-7b0d-46a3-9447-1afa7a2da8c4.png)
 
+### Challenges
 
+The main challenge for this frontend piece is being bothered by the UI/UX in itself. I haven't had much professional experience working with frontend
+and as such it is a struggle writing code for this part. The deployment part was easier than the backend due to available web hosting services however the disparity between http and https prevents the marriage between the frontend and backend to finally deploy the time-tracking web application.
+
+### Future Improvements
+
+1. The User interface needs improvement. The UX can be improved by adding loading components and the transitions between state changes could use minor animation changes like snackbars for example.
+2. The structure of the Vuex can be further improved and refactored.
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
