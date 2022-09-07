@@ -64,6 +64,13 @@ export default {
     created() {
         let checkins = this.allCheckins
         this.visible_checkins = checkins.slice(0, 5)
+    },
+    watch:{
+        allCheckins(curr, prev) {
+            if (curr.length != prev.length) {
+                this.onPageChange();
+            }
+        }
     }
 }
 </script>

@@ -11,11 +11,12 @@
                 label="password"
                 v-model="password"
             ></v-text-field>
-            <v-btn >Log In</v-btn>
+            <v-btn @click="submit">Log In</v-btn>
         </v-container>
     </v-card>
 </template>
 <script>
+import { mapActions } from 'vuex';
 export default {
     name: "LoginForm",
     data: () => ({
@@ -23,8 +24,14 @@ export default {
         password: ''
     }),
     methods: {
-        logIn() {
-            console.log(`username=${this.username} password=${this.password}`);
+        ...mapActions("auth", ["login"]),
+        async submit() {
+            await this.login({
+                "username" : this.username,
+                "password" : this.password
+            });
+
+            this.$router.push("/checkins");
         }
     }
 }

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const state = {
     token: null,
     user: {
@@ -9,14 +11,24 @@ const state = {
 
 const getters = {
     getToken: state => { return state.token },
-    getUser: state => { return state.user }
+    getUser: state => { return state.user },
+    IsAuthenticated: state => { return state.token !== null; }
 };
 
 const actions = {
-    login({ commit }, credentials) {
+    async login({ commit }, credentials) {
         console.log(credentials);
+        const params = new URLSearchParams();
+        params.append("username", credentials.username);
+        params.append("password", credentials.password);
 
-        commit()
+        const response = await axios.post("http://localhost:8000/token", params)
+        const { access_token } = response.data
+
+        commit('SET_TOKEN', access_token);
+    },
+    logout({ commit }) {
+        commit('SET_TOKEN', null);
     }
 };
 

@@ -855,7 +855,7 @@ const actions = {
 
 const mutations = {
     SET_CHECKINS: (state, checkins) => (state.checkins = checkins),
-    NEW_CHECKIN: (state, checkin) => state.checkins.unshift(checkin),
+    NEW_CHECKIN: (state, checkin) => (state.checkins = [checkin, ...state.checkins]),
     REMOVE_CHECKIN: (state, id) => state.checkins = (state.checkins.filter(checkin => checkin.id !== id))
 };
 

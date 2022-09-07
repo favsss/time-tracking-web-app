@@ -8,11 +8,12 @@
     >
       <v-app-bar-title>Time Tracker</v-app-bar-title>
       <v-spacer></v-spacer>
-      <v-tabs centered>
-        <v-tab to="/">Checkin</v-tab>
+
+      <v-tabs centered v-if="IsAuthenticated">
+        <v-tab to="/checkins">Checkin</v-tab>
         <v-tab to="/charts">Charts</v-tab>
       </v-tabs>
-      <v-btn>Logout</v-btn>
+      <v-btn v-if="IsAuthenticated" @click="submit">Logout</v-btn>
     </v-app-bar>
 
     <v-main>
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'App',
 
@@ -29,6 +31,16 @@ export default {
   },
   data: () => ({
     //
-  })
+  }),
+  computed: {
+    ...mapGetters("auth", ["IsAuthenticated"])
+  },
+  methods: {
+    ...mapActions("auth", ["logout"]),
+    submit() {
+      this.logout();
+      this.$router.push("/");
+    }
+  }
 };
 </script>
